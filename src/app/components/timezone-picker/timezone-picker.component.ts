@@ -71,7 +71,7 @@ export class TimezonePickerComponent implements OnInit, OnChanges {
 
   returnTime(selectedTimeZone, dateTimeFormat) {
     if (selectedTimeZone !== '') {
-      this.currentTime = moment().tz(selectedTimeZone).format(dateTimeFormat);
+      this.currentTime = moment.tz(selectedTimeZone).format(dateTimeFormat);
     }
     this.output.emit({ selectedTimeZone: selectedTimeZone, currentTime: this.currentTime });
   }
