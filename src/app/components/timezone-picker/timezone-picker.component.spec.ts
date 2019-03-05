@@ -5,7 +5,7 @@ import * as moment from 'moment-timezone';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-fdescribe('TimezonePickerComponent', () => {
+describe('TimezonePickerComponent', () => {
   let component: TimezonePickerComponent;
   let fixture: ComponentFixture<TimezonePickerComponent>;
   let timeZoneSearchTextboxEl;
