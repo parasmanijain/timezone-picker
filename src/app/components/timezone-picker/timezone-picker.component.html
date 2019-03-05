@@ -1,0 +1,17 @@
+<div class="container" #timeZoneContainer>
+  <div class="row">
+    <div class="col-md-12">
+      <input type="text" class="validate filter-input" (keyup)="updateList(search)" [(ngModel)]="search" (mousedown)="displayTimeZones()">
+      <div id="myDropdown" class="dropdown-content">
+        <div [ngClass]="{displayDropdown:displayTZ==true,hideDropdown:displayTZ==false}">
+          <div *ngFor="let timezone of filteredTimeZones">
+            <span (click)="displayTime(timezone)">{{ timezone }}</span>
+          </div>
+        </div>
+        <div *ngIf="filteredTimeZones.length === 0 &&  search.length !== 0">
+            <span>No Timezone found</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
