@@ -8,8 +8,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 dateFormatPicker">
-      <label>Date Time Format Picker</label>
+    <div class="col-md-3">
+      <div>Date Time Format Picker</div>
       <select [(ngModel)] = "selectedDateFormat" name="dateFormatSelected" #dateFormatSelected="ngModel">
         <option *ngFor="let dateFormat of dateFormats"
         [value]="dateFormat.value"
@@ -18,12 +18,22 @@
         </option>
       </select>
     </div>
-    <div class="col-md-4">
-      <label>Timezone Picker</label>
-      <app-timezone-picker [dateTimeFormat]="selectedDateFormat" (output)="retrieveCurrentTime($event)"></app-timezone-picker>
+    <div class="col-md-3">
+      <div>Dropdown  Color Picker</div>
+      <select [(ngModel)] = "selectedDropdownColor" name="dropdownColorSelected" #dropdownColorSelected="ngModel">
+        <option *ngFor="let dropdownColor of dropdownColors"
+        [value]="dropdownColor.value"
+        [attr.selected]="selectedDropdownColor==dropdownColor.value ? true : null">
+          {{dropdownColor.text}}
+        </option>
+      </select>
     </div>
-    <div class="col-md-4">
-      <label>Result</label>
+    <div class="col-md-3">
+      <div>Timezone Picker</div>
+      <app-timezone-picker [dropdownColor]="selectedDropdownColor" [dateTimeFormat]="selectedDateFormat" (output)="retrieveCurrentTime($event)"></app-timezone-picker>
+    </div>
+    <div class="col-md-3">
+      <div>Result</div>
       <div *ngIf="selectedTimeZone !== '' && currentTime !== ''">
         <div>DateTimeFormat - {{selectedDateFormat}}</div>
         <div>Selected TimeZone = {{selectedTimeZone}}</div>

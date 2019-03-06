@@ -11,6 +11,7 @@ import * as moment from 'moment-timezone';
 export class TimezonePickerComponent implements OnInit, OnChanges {
 
   @Input() dateTimeFormat;
+  @Input() dropdownColor;
   @Output() output: any = new EventEmitter();
   @ViewChild('timeZoneContainer', {read: ElementRef}) tref: ElementRef;
   public timezones;
@@ -27,10 +28,10 @@ export class TimezonePickerComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges) {
     if (typeof changes.dateTimeFormat !== 'undefined') {
-        const change = changes['dateTimeFormat'];
-        if (!change.isFirstChange()) {
-          this.returnTime(this.selectedTimeZone, change.currentValue);
-      }
+        const dateTimeFormatChange = changes['dateTimeFormat'];
+        if (!dateTimeFormatChange.isFirstChange()) {
+          this.returnTime(this.selectedTimeZone, dateTimeFormatChange.currentValue);
+        }
     }
   }
 
@@ -73,7 +74,7 @@ export class TimezonePickerComponent implements OnInit, OnChanges {
     if (selectedTimeZone !== '') {
       this.currentTime = moment.tz(selectedTimeZone).format(dateTimeFormat);
     }
-    this.output.emit({ selectedTimeZone: selectedTimeZone, currentTime: this.currentTime });
+    this.output.emit({ selectedTimeZone: selectedTimeZone, currentTime: this.currentTime});
   }
 
   closeDropDown() {

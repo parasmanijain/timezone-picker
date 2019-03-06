@@ -34,6 +34,28 @@ export class AppComponent implements OnInit {
       'value': 'YYYY MM DD'
     }
   ];
+  public dropdownColors = [
+    {
+      'text': '#cccccc',
+      'value': '#cccccc'
+    },
+    {
+      'text': '#fcc750',
+      'value': '#fcc750'
+    },
+    {
+      'text': '#cafff7',
+      'value': '#cafff7'
+    },
+    {
+      'text': '#fff9e7',
+      'value': '#fff9e7'
+    },
+    {
+      'text': '#f6effb',
+      'value': '#f6effb'
+    }
+  ];
   constructor() {
 
   }

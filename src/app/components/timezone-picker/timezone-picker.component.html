@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <input type="text" class="validate filter-input" id="timeZoneSearch" (keyup)="updateList(search)" [(ngModel)]="search" (mousedown)="displayTimeZones()">
-      <div id="myDropdown" class="dropdown-content">
+      <div id="myDropdown" class="dropdown-content" [ngStyle]="{'background-color':dropdownColor}">
         <div [ngClass]="{displayDropdown:displayTZ==true,hideDropdown:displayTZ==false}">
           <div *ngFor="let timezone of filteredTimeZones">
             <span (click)="displayTime(timezone)">{{ timezone }}</span>
