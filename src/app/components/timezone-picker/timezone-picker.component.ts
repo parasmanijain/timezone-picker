@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges,
-  SimpleChanges, ChangeDetectionStrategy, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges,  SimpleChanges,
+ ChangeDetectionStrategy, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import * as moment from 'moment-timezone';
 
 @Component({
@@ -8,14 +8,15 @@ import * as moment from 'moment-timezone';
   styleUrls: ['./timezone-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimezonePickerComponent implements OnInit, OnChanges {
+export class TimezonePickerComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() dateTimeFormat;
   @Input() dropdownColor;
   @Output() output: any = new EventEmitter();
   @ViewChild('timeZoneContainer', {read: ElementRef}) tref: ElementRef;
-  public timezones;
-  public filteredTimeZones;
+
+  public timezones: any;
+  public filteredTimeZones = '';
   public search = '';
   public selectedTimeZone = '';
   public currentTime = '';
@@ -24,6 +25,15 @@ export class TimezonePickerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if (!this.dateTimeFormat) {
+      this.dateTimeFormat = 'DD/MM/YYYY';
+    }
+  if (!this.dropdownColor) {
+      this.dropdownColor = '#fffacd';
+    }
+  }
+
+  ngAfterViewInit() {
     this.getDefaultValues();
   }
   ngOnChanges(changes: SimpleChanges) {

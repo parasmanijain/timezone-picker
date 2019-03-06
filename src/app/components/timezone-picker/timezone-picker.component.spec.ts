@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TimezonePickerComponent } from './timezone-picker.component';
 import * as moment from 'moment-timezone';
-import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('TimezonePickerComponent', () => {
