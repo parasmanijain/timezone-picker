@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
       'value': 'YYYY MM DD'
     }
   ];
+
   public dropdownColors = [
     {
       'text': '#cccccc',
@@ -56,6 +57,7 @@ export class AppComponent implements OnInit {
       'value': '#f6effb'
     }
   ];
+
   constructor() {
 
   }
