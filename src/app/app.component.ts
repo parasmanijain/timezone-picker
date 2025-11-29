@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
   imports: [FormsModule],
+  standalone: true,
 })
 export class AppComponent implements OnInit {
   public dateTimeFormat = "";
