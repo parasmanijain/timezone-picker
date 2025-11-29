@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es2022",
-    "module": "es2022",
+    "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -10,11 +10,9 @@
     "noFallthroughCasesInSwitch": true,
     "useDefineForClassFields": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "baseUrl": "./",
-    "paths": {},
-    "lib": ["es2022", "dom"]
+    "paths": {}
   }
 }
