@@ -12,21 +12,25 @@
     <div class="col-md-3">
       <div>Date Time Format Picker</div>
       <select [(ngModel)] = "selectedDateFormat" name="dateFormatSelected" #dateFormatSelected="ngModel">
-        <option *ngFor="let dateFormat of dateFormats"
-        [value]="dateFormat.value"
-        [attr.selected]="selectedDateFormat==dateFormat.value ? true : null">
-          {{dateFormat.text}}
-        </option>
+        @for (dateFormat of dateFormats; track dateFormat) {
+          <option
+            [value]="dateFormat.value"
+            [attr.selected]="selectedDateFormat==dateFormat.value ? true : null">
+            {{dateFormat.text}}
+          </option>
+        }
       </select>
     </div>
     <div class="col-md-3">
       <div>Dropdown  Color Picker</div>
       <select [(ngModel)] = "selectedDropdownColor" name="dropdownColorSelected" #dropdownColorSelected="ngModel">
-        <option *ngFor="let dropdownColor of dropdownColors"
-        [value]="dropdownColor.value"
-        [attr.selected]="selectedDropdownColor==dropdownColor.value ? true : null">
-          {{dropdownColor.text}}
-        </option>
+        @for (dropdownColor of dropdownColors; track dropdownColor) {
+          <option
+            [value]="dropdownColor.value"
+            [attr.selected]="selectedDropdownColor==dropdownColor.value ? true : null">
+            {{dropdownColor.text}}
+          </option>
+        }
       </select>
     </div>
     <div class="col-md-3">
@@ -35,12 +39,14 @@
     </div>
     <div class="col-md-3">
       <div>Result</div>
-      <div *ngIf="selectedTimeZone !== '' && currentTime !== ''">
-        <div>DateTimeFormat - {{selectedDateFormat}}</div>
-        <div>DdropdownColor - {{selectedDropdownColor}}</div>
-        <div>Selected TimeZone = {{selectedTimeZone}}</div>
-        <div>Current Time = {{currentTime}}</div>
-      </div>
+      @if (selectedTimeZone !== '' && currentTime !== '') {
+        <div>
+          <div>DateTimeFormat - {{selectedDateFormat}}</div>
+          <div>DdropdownColor - {{selectedDropdownColor}}</div>
+          <div>Selected TimeZone = {{selectedTimeZone}}</div>
+          <div>Current Time = {{currentTime}}</div>
+        </div>
+      }
     </div>
   </div>
 </div>
