@@ -1,74 +1,69 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
+  imports: [FormsModule],
 })
 export class AppComponent implements OnInit {
-
-  public dateTimeFormat = '';
-  public selectedDateFormat = '';
-  public selectedTimeZone = '';
-  public currentTime = '';
+  public dateTimeFormat = "";
+  public selectedDateFormat = "";
+  public selectedTimeZone = "";
+  public currentTime = "";
   public dateFormats = [
     {
-      'text': 'dddd, MMMM Do YYYY, h:mm:ss a',
-      'value': 'dddd, MMMM Do YYYY, h:mm:ss a'
+      text: "dddd, MMMM Do YYYY, h:mm:ss a",
+      value: "dddd, MMMM Do YYYY, h:mm:ss a",
     },
     {
-      'text': 'YYYY-MM-DDTHH:mm	',
-      'value': 'YYYY-MM-DDTHH:mm	'
+      text: "YYYY-MM-DDTHH:mm	",
+      value: "YYYY-MM-DDTHH:mm	",
     },
     {
-      'text': 'YYYY-MM-DDTHH:mm:ss.SSS',
-      'value': 'YYYY-MM-DDTHH:mm:ss.SSS'
+      text: "YYYY-MM-DDTHH:mm:ss.SSS",
+      value: "YYYY-MM-DDTHH:mm:ss.SSS",
     },
     {
-      'text': 'ddd, hA',
-      'value': 'ddd, hA'
+      text: "ddd, hA",
+      value: "ddd, hA",
     },
     {
-      'text': 'YYYY MM DD',
-      'value': 'YYYY MM DD'
-    }
+      text: "YYYY MM DD",
+      value: "YYYY MM DD",
+    },
   ];
 
   public dropdownColors = [
     {
-      'text': '#cccccc',
-      'value': '#cccccc'
+      text: "#cccccc",
+      value: "#cccccc",
     },
     {
-      'text': '#fcc750',
-      'value': '#fcc750'
+      text: "#fcc750",
+      value: "#fcc750",
     },
     {
-      'text': '#cafff7',
-      'value': '#cafff7'
+      text: "#cafff7",
+      value: "#cafff7",
     },
     {
-      'text': '#fff9e7',
-      'value': '#fff9e7'
+      text: "#fff9e7",
+      value: "#fff9e7",
     },
     {
-      'text': '#f6effb',
-      'value': '#f6effb'
-    }
+      text: "#f6effb",
+      value: "#f6effb",
+    },
   ];
 
-  constructor() {
+  constructor() {}
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   retrieveCurrentTime(event) {
     this.selectedTimeZone = event.selectedTimeZone;
     this.currentTime = event.currentTime;
   }
-
 }
