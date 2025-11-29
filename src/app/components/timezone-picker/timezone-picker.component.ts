@@ -51,8 +51,8 @@ export class TimezonePickerComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.dateTimeFormat) {
-      const change = changes.dateTimeFormat;
+    if (changes["dateTimeFormat"]) {
+      const change = changes["dateTimeFormat"];
       if (!change.isFirstChange()) {
         this.returnTime(this.selectedTimeZone, change.currentValue);
       }
@@ -99,10 +99,14 @@ export class TimezonePickerComponent
     this.displayTZ = false;
   }
 
-  @HostListener("document:click", ["$event", "$event.target"])
-  onClick(event: MouseEvent, targetElement: HTMLElement) {
-    if (!targetElement) return;
-    const clickedInside = this.tref.nativeElement.contains(targetElement);
+  @HostListener("document:click", ["$event"])
+  onClick(event: MouseEvent) {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    const clickedInside = this.tref?.nativeElement.contains(target);
+
     if (!clickedInside) this.closeDropDown();
   }
 }
