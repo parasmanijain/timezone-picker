@@ -1,17 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { TimezonePickerComponent } from "./components/timezone-picker/timezone-picker.component";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  imports: [FormsModule],
-  standalone: true,
+  imports: [FormsModule, TimezonePickerComponent],
 })
 export class AppComponent implements OnInit {
   public dateTimeFormat = "";
   public selectedDateFormat = "";
   public selectedTimeZone = "";
+  selectedDropdownColor = "";
   public currentTime = "";
   public dateFormats = [
     {
@@ -63,7 +64,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {}
 
-  retrieveCurrentTime(event) {
+  retrieveCurrentTime(event: {
+    selectedTimeZone: string;
+    currentTime: string;
+  }) {
     this.selectedTimeZone = event.selectedTimeZone;
     this.currentTime = event.currentTime;
   }

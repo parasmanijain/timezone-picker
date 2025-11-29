@@ -1,19 +1,20 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "module": "esnext",
-    "moduleResolution": "bundler",
     "target": "es2022",
-    "useDefineForClassFields": true,
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": true,
     "esModuleInterop": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "lib": [
-      "es2022",
-      "dom"
-    ]
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "paths": {},
+    "lib": ["es2022", "dom"]
   }
 }

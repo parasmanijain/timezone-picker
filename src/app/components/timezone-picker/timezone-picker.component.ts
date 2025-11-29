@@ -1,36 +1,53 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges,  SimpleChanges,
- ChangeDetectionStrategy, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import * as moment from 'moment-timezone';
+import { CommonModule } from "@angular/common";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+  HostListener,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import * as moment from "moment-timezone";
 
 @Component({
-    selector: 'app-timezone-picker',
-    templateUrl: './timezone-picker.component.html',
-    styleUrls: ['./timezone-picker.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: "app-timezone-picker",
+  templateUrl: "./timezone-picker.component.html",
+  styleUrls: ["./timezone-picker.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, FormsModule],
 })
-export class TimezonePickerComponent implements OnInit, OnChanges, AfterViewInit {
-
-  @Input() dateTimeFormat;
-  @Input() dropdownColor;
+export class TimezonePickerComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
+  @Input()
+  dateTimeFormat!: string;
+  @Input()
+  dropdownColor!: string;
   @Output() output: any = new EventEmitter();
-  @ViewChild('timeZoneContainer', {read: ElementRef}) tref: ElementRef;
+  @ViewChild("timeZoneContainer", { read: ElementRef })
+  tref!: ElementRef;
 
   public timezones: any;
-  public filteredTimeZones = '';
-  public search = '';
-  public selectedTimeZone = '';
-  public currentTime = '';
+  public filteredTimeZones = "";
+  public search = "";
+  public selectedTimeZone = "";
+  public currentTime = "";
   public displayTZ = false;
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     if (!this.dateTimeFormat) {
-      this.dateTimeFormat = 'DD/MM/YYYY';
+      this.dateTimeFormat = "DD/MM/YYYY";
     }
-  if (!this.dropdownColor) {
-      this.dropdownColor = '#fffacd';
+    if (!this.dropdownColor) {
+      this.dropdownColor = "#fffacd";
     }
   }
 
@@ -38,11 +55,14 @@ export class TimezonePickerComponent implements OnInit, OnChanges, AfterViewInit
     this.getDefaultValues();
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (typeof changes.dateTimeFormat !== 'undefined') {
-        const dateTimeFormatChange = changes['dateTimeFormat'];
-        if (!dateTimeFormatChange.isFirstChange()) {
-          this.returnTime(this.selectedTimeZone, dateTimeFormatChange.currentValue);
-        }
+    if (typeof changes.dateTimeFormat !== "undefined") {
+      const dateTimeFormatChange = changes["dateTimeFormat"];
+      if (!dateTimeFormatChange.isFirstChange()) {
+        this.returnTime(
+          this.selectedTimeZone,
+          dateTimeFormatChange.currentValue
+        );
+      }
     }
   }
 
@@ -51,22 +71,22 @@ export class TimezonePickerComponent implements OnInit, OnChanges, AfterViewInit
     this.filteredTimeZones = this.timezones;
   }
 
-  updateList(search) {
-    if (search === '') {
-        this.selectedTimeZone = '';
-        this.currentTime = '';
-        this.returnTime(this.selectedTimeZone, this.dateTimeFormat);
+  updateList(search: string) {
+    if (search === "") {
+      this.selectedTimeZone = "";
+      this.currentTime = "";
+      this.returnTime(this.selectedTimeZone, this.dateTimeFormat);
     }
-    this.filteredTimeZones = this.timezones.filter((timezone) => {
-      return (timezone.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+    this.filteredTimeZones = this.timezones.filter((timezone: string) => {
+      return timezone.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     });
   }
 
-  timezoneByName(index, timezone) {
+  timezoneByName(index: any, timezone: any) {
     return timezone;
   }
 
-  displayTime(timezone) {
+  displayTime(timezone: string) {
     this.selectedTimeZone = timezone;
     this.search = this.selectedTimeZone;
     this.displayTZ = false;
@@ -74,32 +94,38 @@ export class TimezonePickerComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   displayTimeZones() {
-    if (this.filteredTimeZones.length > 0 && (this.search.length >= 0 || this.search !== this.selectedTimeZone)) {
+    if (
+      this.filteredTimeZones.length > 0 &&
+      (this.search.length >= 0 || this.search !== this.selectedTimeZone)
+    ) {
       this.displayTZ = true;
     } else {
       this.displayTZ = false;
     }
   }
 
-  returnTime(selectedTimeZone, dateTimeFormat) {
-    if (selectedTimeZone !== '') {
+  returnTime(selectedTimeZone: string, dateTimeFormat: string | undefined) {
+    if (selectedTimeZone !== "") {
       this.currentTime = moment.tz(selectedTimeZone).format(dateTimeFormat);
     }
-    this.output.emit({ selectedTimeZone: selectedTimeZone, currentTime: this.currentTime});
+    this.output.emit({
+      selectedTimeZone: selectedTimeZone,
+      currentTime: this.currentTime,
+    });
   }
 
   closeDropDown() {
     this.displayTZ = false;
   }
 
-  @HostListener('document:click', ['$event', '$event.target'])
+  @HostListener("document:click", ["$event", "$event.target"])
   public onClick(event: MouseEvent, targetElement: HTMLElement): void {
-      if (!targetElement) {
-          return;
-      }
-      const clickedInside = this.tref.nativeElement.contains(targetElement);
-      if (!clickedInside) {
-           this.closeDropDown();
-      }
+    if (!targetElement) {
+      return;
+    }
+    const clickedInside = this.tref.nativeElement.contains(targetElement);
+    if (!clickedInside) {
+      this.closeDropDown();
+    }
   }
 }

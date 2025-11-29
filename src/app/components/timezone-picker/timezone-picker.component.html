@@ -1,20 +1,31 @@
 <div class="container" #timeZoneContainer>
   <div class="row">
     <div class="col-md-12">
-      <input type="text" class="validate filter-input" id="timeZoneSearch" (keyup)="updateList(search)" [(ngModel)]="search" (mousedown)="displayTimeZones()">
-      <div id="myDropdown" class="dropdown-content" [ngStyle]="{'background-color':dropdownColor}">
-        <div [ngClass]="{displayDropdown:displayTZ==true,hideDropdown:displayTZ==false}">
+      <input
+        type="text"
+        class="validate filter-input"
+        id="timeZoneSearch"
+        [(ngModel)]="search"
+        (input)="updateList(search)"
+        (mousedown)="displayTimeZones()"
+      />
+
+      <div
+        id="myDropdown"
+        class="dropdown-content"
+        [ngStyle]="{ 'background-color': dropdownColor }"
+      >
+        <div [ngClass]="displayTZ ? 'displayDropdown' : 'hideDropdown'">
           @for (timezone of filteredTimeZones; track timezone) {
             <div>
               <span (click)="displayTime(timezone)">{{ timezone }}</span>
             </div>
+          } @empty {
+            <div>
+              <span>No Timezone found</span>
+            </div>
           }
         </div>
-        @if (filteredTimeZones.length === 0 &&  search.length !== 0) {
-          <div>
-            <span>No Timezone found</span>
-          </div>
-        }
       </div>
     </div>
   </div>
