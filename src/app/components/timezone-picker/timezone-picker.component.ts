@@ -19,6 +19,7 @@ import * as moment from "moment-timezone";
 @Component({
   selector: "app-timezone-picker",
   imports: [CommonModule, FormsModule],
+  standalone: true,
   templateUrl: "./timezone-picker.component.html",
   styleUrls: ["./timezone-picker.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

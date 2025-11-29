@@ -17,7 +17,7 @@
     "@angular/platform-browser": "^20.3.14",
     "@angular/platform-browser-dynamic": "^20.3.14",
     "@angular/router": "^20.3.14",
-    "moment-timezone": "^0.5.23",
+    "moment-timezone": "^0.6.0",
     "rxjs": "^7.8.1",
     "tslib": "^2.6.2",
     "zone.js": "~0.15.1"

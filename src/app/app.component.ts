@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { TimezonePickerComponent } from "./components/timezone-picker/timezone-picker.component";
+import { BrowserModule } from "@angular/platform-browser";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  imports: [FormsModule, TimezonePickerComponent],
+  standalone: true,
+  imports: [BrowserModule, FormsModule, TimezonePickerComponent],
 })
 export class AppComponent implements OnInit {
   public dateTimeFormat = "";
