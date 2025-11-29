@@ -3,10 +3,11 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges,  SimpleChang
 import * as moment from 'moment-timezone';
 
 @Component({
-  selector: 'app-timezone-picker',
-  templateUrl: './timezone-picker.component.html',
-  styleUrls: ['./timezone-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-timezone-picker',
+    templateUrl: './timezone-picker.component.html',
+    styleUrls: ['./timezone-picker.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TimezonePickerComponent implements OnInit, OnChanges, AfterViewInit {
 
