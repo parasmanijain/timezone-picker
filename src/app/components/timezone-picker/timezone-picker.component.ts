@@ -1,4 +1,5 @@
 import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 import {
   Component,
   OnInit,
@@ -13,55 +14,46 @@ import {
   ElementRef,
   AfterViewInit,
 } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import * as moment from "moment-timezone";
 
 @Component({
   selector: "app-timezone-picker",
+  imports: [CommonModule, FormsModule],
   templateUrl: "./timezone-picker.component.html",
   styleUrls: ["./timezone-picker.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule],
 })
 export class TimezonePickerComponent
   implements OnInit, OnChanges, AfterViewInit
 {
-  @Input()
-  dateTimeFormat!: string;
-  @Input()
-  dropdownColor!: string;
-  @Output() output: any = new EventEmitter();
-  @ViewChild("timeZoneContainer", { read: ElementRef })
-  tref!: ElementRef;
+  @Input() dateTimeFormat!: string;
+  @Input() dropdownColor!: string;
+  @Output() output = new EventEmitter<any>();
+  @ViewChild("timeZoneContainer", { read: ElementRef }) tref!: ElementRef;
 
-  public timezones: any;
-  public filteredTimeZones = "";
+  public timezones: string[] = [];
+  public filteredTimeZones: string[] = [];
   public search = "";
   public selectedTimeZone = "";
   public currentTime = "";
   public displayTZ = false;
+
   constructor() {}
 
   ngOnInit() {
-    if (!this.dateTimeFormat) {
-      this.dateTimeFormat = "DD/MM/YYYY";
-    }
-    if (!this.dropdownColor) {
-      this.dropdownColor = "#fffacd";
-    }
+    if (!this.dateTimeFormat) this.dateTimeFormat = "DD/MM/YYYY";
+    if (!this.dropdownColor) this.dropdownColor = "#fffacd";
   }
 
   ngAfterViewInit() {
     this.getDefaultValues();
   }
+
   ngOnChanges(changes: SimpleChanges) {
-    if (typeof changes.dateTimeFormat !== "undefined") {
-      const dateTimeFormatChange = changes["dateTimeFormat"];
-      if (!dateTimeFormatChange.isFirstChange()) {
-        this.returnTime(
-          this.selectedTimeZone,
-          dateTimeFormatChange.currentValue
-        );
+    if (changes.dateTimeFormat) {
+      const change = changes.dateTimeFormat;
+      if (!change.isFirstChange()) {
+        this.returnTime(this.selectedTimeZone, change.currentValue);
       }
     }
   }
@@ -77,41 +69,29 @@ export class TimezonePickerComponent
       this.currentTime = "";
       this.returnTime(this.selectedTimeZone, this.dateTimeFormat);
     }
-    this.filteredTimeZones = this.timezones.filter((timezone: string) => {
-      return timezone.toLowerCase().indexOf(search.toLowerCase()) !== -1;
-    });
-  }
-
-  timezoneByName(index: any, timezone: any) {
-    return timezone;
+    this.filteredTimeZones = this.timezones.filter((timezone: string) =>
+      timezone.toLowerCase().includes(search.toLowerCase())
+    );
   }
 
   displayTime(timezone: string) {
     this.selectedTimeZone = timezone;
-    this.search = this.selectedTimeZone;
+    this.search = timezone;
     this.displayTZ = false;
     this.returnTime(this.selectedTimeZone, this.dateTimeFormat);
   }
 
   displayTimeZones() {
-    if (
+    this.displayTZ =
       this.filteredTimeZones.length > 0 &&
-      (this.search.length >= 0 || this.search !== this.selectedTimeZone)
-    ) {
-      this.displayTZ = true;
-    } else {
-      this.displayTZ = false;
-    }
+      (this.search.length >= 0 || this.search !== this.selectedTimeZone);
   }
 
-  returnTime(selectedTimeZone: string, dateTimeFormat: string | undefined) {
+  returnTime(selectedTimeZone: string, dateTimeFormat?: string) {
     if (selectedTimeZone !== "") {
       this.currentTime = moment.tz(selectedTimeZone).format(dateTimeFormat);
     }
-    this.output.emit({
-      selectedTimeZone: selectedTimeZone,
-      currentTime: this.currentTime,
-    });
+    this.output.emit({ selectedTimeZone, currentTime: this.currentTime });
   }
 
   closeDropDown() {
@@ -119,13 +99,9 @@ export class TimezonePickerComponent
   }
 
   @HostListener("document:click", ["$event", "$event.target"])
-  public onClick(event: MouseEvent, targetElement: HTMLElement): void {
-    if (!targetElement) {
-      return;
-    }
+  onClick(event: MouseEvent, targetElement: HTMLElement) {
+    if (!targetElement) return;
     const clickedInside = this.tref.nativeElement.contains(targetElement);
-    if (!clickedInside) {
-      this.closeDropDown();
-    }
+    if (!clickedInside) this.closeDropDown();
   }
 }
