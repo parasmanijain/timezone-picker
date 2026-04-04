@@ -1,50 +1,80 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div>Please select the date time format from the first dropdown.Default value is 'DD/MM/YYYY'</div>
-      <div>Please search or select the timezone from the second dropdown.Default value is 'fffacd'</div>
-      <div>Once you are done with the selection of both date time format and timezone, you will see the current time</div>
-      <div>If you change either the format or timezone, the current time value will be updated.</div>
+      <div>
+        Please select the date time format from the first dropdown.Default value
+        is 'DD/MM/YYYY'
+      </div>
+      <div>
+        Please search or select the timezone from the second dropdown.Default
+        value is 'fffacd'
+      </div>
+      <div>
+        Once you are done with the selection of both date time format and
+        timezone, you will see the current time
+      </div>
+      <div>
+        If you change either the format or timezone, the current time value will
+        be updated.
+      </div>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-3">
       <div>Date Time Format Picker</div>
-      <select [(ngModel)] = "selectedDateFormat" name="dateFormatSelected" #dateFormatSelected="ngModel">
+      <select
+        [(ngModel)]="selectedDateFormat"
+        name="dateFormatSelected"
+        #dateFormatSelected="ngModel"
+      >
         @for (dateFormat of dateFormats; track dateFormat) {
           <option
             [value]="dateFormat.value"
-            [attr.selected]="selectedDateFormat==dateFormat.value ? true : null">
-            {{dateFormat.text}}
+            [attr.selected]="
+              selectedDateFormat === dateFormat.value ? true : null
+            "
+          >
+            {{ dateFormat.text }}
           </option>
         }
       </select>
     </div>
     <div class="col-md-3">
-      <div>Dropdown  Color Picker</div>
-      <select [(ngModel)] = "selectedDropdownColor" name="dropdownColorSelected" #dropdownColorSelected="ngModel">
+      <div>Dropdown Color Picker</div>
+      <select
+        [(ngModel)]="selectedDropdownColor"
+        name="dropdownColorSelected"
+        #dropdownColorSelected="ngModel"
+      >
         @for (dropdownColor of dropdownColors; track dropdownColor) {
           <option
             [value]="dropdownColor.value"
-            [attr.selected]="selectedDropdownColor==dropdownColor.value ? true : null">
-            {{dropdownColor.text}}
+            [attr.selected]="
+              selectedDropdownColor === dropdownColor.value ? true : null
+            "
+          >
+            {{ dropdownColor.text }}
           </option>
         }
       </select>
     </div>
     <div class="col-md-3">
       <div>Timezone Picker</div>
-      <app-timezone-picker [dropdownColor]="selectedDropdownColor" [dateTimeFormat]="selectedDateFormat" (output)="retrieveCurrentTime($event)"></app-timezone-picker>
+      <app-timezone-picker
+        [dropdownColor]="selectedDropdownColor"
+        [dateTimeFormat]="selectedDateFormat"
+        (output)="retrieveCurrentTime($event)"
+      ></app-timezone-picker>
     </div>
     <div class="col-md-3">
       <div>Result</div>
-      @if (selectedTimeZone !== '' && currentTime !== '') {
+      @if (selectedTimeZone !== "" && currentTime !== "") {
         <div>
-          <div>DateTimeFormat - {{selectedDateFormat}}</div>
-          <div>DdropdownColor - {{selectedDropdownColor}}</div>
-          <div>Selected TimeZone = {{selectedTimeZone}}</div>
-          <div>Current Time = {{currentTime}}</div>
+          <div>DateTimeFormat - {{ selectedDateFormat }}</div>
+          <div>DdropdownColor - {{ selectedDropdownColor }}</div>
+          <div>Selected TimeZone = {{ selectedTimeZone }}</div>
+          <div>Current Time = {{ currentTime }}</div>
         </div>
       }
     </div>

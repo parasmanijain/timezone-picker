@@ -18,7 +18,15 @@
         <div [ngClass]="displayTZ ? 'displayDropdown' : 'hideDropdown'">
           @for (timezone of filteredTimeZones; track timezone) {
             <div>
-              <span (click)="displayTime(timezone)">{{ timezone }}</span>
+              <span
+                (click)="displayTime(timezone)"
+                (keyup.enter)="displayTime(timezone)"
+                (keyup.space)="displayTime(timezone)"
+                tabindex="0"
+                role="button"
+                [attr.aria-label]="'Select timezone ' + timezone"
+                >{{ timezone }}</span
+              >
             </div>
           } @empty {
             <div>

@@ -14,7 +14,38 @@ import {
   ElementRef,
   AfterViewInit,
 } from "@angular/core";
-import * as moment from "moment-timezone";
+import { format } from "date-fns";
+import { formatInTimeZone, toZonedTime } from "date-fns-tz";
+
+// Timezone list - using Intl.supportedValuesOf for modern browsers
+const getTimeZones = (): string[] => {
+  try {
+    return Intl.supportedValuesOf("timeZone");
+  } catch {
+    // Fallback for older browsers
+    return [
+      "UTC",
+      "America/New_York",
+      "America/Chicago",
+      "America/Denver",
+      "America/Los_Angeles",
+      "Europe/London",
+      "Europe/Paris",
+      "Europe/Berlin",
+      "Asia/Tokyo",
+      "Asia/Shanghai",
+      "Asia/Kolkata",
+      "Australia/Sydney",
+      // Add more timezones as needed
+    ];
+  }
+};
+
+// ES6+ Interface definitions
+interface TimeZoneOutput {
+  readonly selectedTimeZone: string;
+  readonly currentTime: string;
+}
 
 @Component({
   selector: "app-timezone-picker",
@@ -29,84 +60,104 @@ export class TimezonePickerComponent
 {
   @Input() dateTimeFormat!: string;
   @Input() dropdownColor!: string;
-  @Output() output = new EventEmitter<any>();
+  @Output() output = new EventEmitter<TimeZoneOutput>();
   @ViewChild("timeZoneContainer", { read: ElementRef }) tref!: ElementRef;
 
-  public timezones: string[] = [];
+  public timezones: readonly string[] = [];
   public filteredTimeZones: string[] = [];
   public search = "";
   public selectedTimeZone = "";
   public currentTime = "";
   public displayTZ = false;
 
-  constructor() {}
-
-  ngOnInit() {
-    if (!this.dateTimeFormat) this.dateTimeFormat = "DD/MM/YYYY";
-    if (!this.dropdownColor) this.dropdownColor = "#fffacd";
+  // ES6+ Default parameter values instead of constructor logic
+  ngOnInit(): void {
+    this.dateTimeFormat = this.dateTimeFormat || "dd/MM/yyyy";
+    this.dropdownColor = this.dropdownColor || "#fffacd";
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getDefaultValues();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes["dateTimeFormat"]) {
-      const change = changes["dateTimeFormat"];
-      if (!change.isFirstChange()) {
-        this.returnTime(this.selectedTimeZone, change.currentValue);
-      }
+  ngOnChanges(changes: SimpleChanges): void {
+    // ES6+ Destructuring and optional chaining
+    const { dateTimeFormat } = changes;
+    if (dateTimeFormat && !dateTimeFormat.isFirstChange()) {
+      this.returnTime(this.selectedTimeZone, dateTimeFormat.currentValue);
     }
   }
 
-  getDefaultValues() {
-    this.timezones = moment.tz.names();
-    this.filteredTimeZones = this.timezones;
-  }
+  // ES6+ Arrow function for method
+  private readonly getDefaultValues = (): void => {
+    this.timezones = getTimeZones();
 
-  updateList(search: string) {
+    this.filteredTimeZones = [...this.timezones]; // ES6+ Spread operator for array copying
+  };
+
+  // ES6+ Arrow function with early return pattern
+  public readonly updateList = (search: string): void => {
     if (search === "") {
       this.selectedTimeZone = "";
       this.currentTime = "";
       this.returnTime(this.selectedTimeZone, this.dateTimeFormat);
     }
-    this.filteredTimeZones = this.timezones.filter((timezone: string) =>
-      timezone.toLowerCase().includes(search.toLowerCase())
+
+    // ES6+ Arrow function in filter with implicit return
+    this.filteredTimeZones = this.timezones.filter((timezone) =>
+      timezone.toLowerCase().includes(search.toLowerCase()),
     );
-  }
+  };
 
-  displayTime(timezone: string) {
-    this.selectedTimeZone = timezone;
-    this.search = timezone;
-    this.displayTZ = false;
+  // ES6+ Arrow function with object assignment
+  public readonly displayTime = (timezone: string): void => {
+    Object.assign(this, {
+      selectedTimeZone: timezone,
+      search: timezone,
+      displayTZ: false,
+    });
     this.returnTime(this.selectedTimeZone, this.dateTimeFormat);
-  }
+  };
 
-  displayTimeZones() {
+  // ES6+ Arrow function with logical operators
+  public readonly displayTimeZones = (): void => {
     this.displayTZ =
       this.filteredTimeZones.length > 0 &&
       (this.search.length >= 0 || this.search !== this.selectedTimeZone);
-  }
+  };
 
-  returnTime(selectedTimeZone: string, dateTimeFormat?: string) {
-    if (selectedTimeZone !== "") {
-      this.currentTime = moment.tz(selectedTimeZone).format(dateTimeFormat);
-    }
+  // ES6+ Arrow function with ternary operator and object shorthand
+  public readonly returnTime = (
+    selectedTimeZone: string,
+    dateTimeFormat?: string,
+  ): void => {
+    this.currentTime =
+      selectedTimeZone !== ""
+        ? formatInTimeZone(
+            new Date(),
+            selectedTimeZone,
+            dateTimeFormat || "dd/MM/yyyy",
+          )
+        : "";
+    // ES6+ Object shorthand property names
     this.output.emit({ selectedTimeZone, currentTime: this.currentTime });
-  }
+  };
 
-  closeDropDown() {
+  // ES6+ Arrow function for simple method
+  public readonly closeDropDown = (): void => {
     this.displayTZ = false;
-  }
+  };
 
+  // ES6+ Arrow function with optional chaining and early return
   @HostListener("document:click", ["$event"])
-  onClick(event: MouseEvent) {
+  public readonly onClick = (event: MouseEvent): void => {
     const target = event.target;
 
     if (!(target instanceof HTMLElement)) return;
 
-    const clickedInside = this.tref?.nativeElement.contains(target);
+    // ES6+ Optional chaining with logical NOT
+    const clickedInside = this.tref?.nativeElement?.contains(target);
 
     if (!clickedInside) this.closeDropDown();
-  }
+  };
 }
